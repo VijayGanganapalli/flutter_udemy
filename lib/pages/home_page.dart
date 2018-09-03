@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("Pressed!");
+          print("Action button pressed!");
         },
         child: Icon(Icons.add),
       ),
