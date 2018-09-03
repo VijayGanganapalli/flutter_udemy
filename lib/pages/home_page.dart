@@ -7,6 +7,12 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Let's see some images!"),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("Pressed!");
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
