@@ -1,4 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' show get;
+import '../models/image_model.dart';
+import '../widgets/image_list.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -7,6 +11,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int counter = 0;
+  List<ImageModel> images = [];
+
+  void fetchImage() async {
+    counter += 1;
+    var response =
+        await get('https://jsonplaceholder.typicode.com/photos/$counter');
+    var imageModel = ImageModel.fromJson(json.decode(response.body));
+
+    setState(() {
+      images.add(imageModel);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,21 +30,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Let's see some images!"),
       ),
-      body: Center(
-        child: Text(
-          "Action button pressed $counter times.",
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      body: ImageList(images),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            counter += 1;
-          });
-        },
+        onPressed: fetchImage,
         child: Icon(Icons.add),
       ),
     );
